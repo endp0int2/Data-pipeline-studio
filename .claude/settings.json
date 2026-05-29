@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --allow-file-access-from-files --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_profile\" --hide-scrollbars --window-size=1440,900 --virtual-time-budget=12000 --screenshot=\"C:/Users/yasir/data-pipeline-studio/_repro.png\" \"file:///C:/Users/yasir/data-pipeline-studio/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --allow-file-access-from-files --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_profile2\" --virtual-time-budget=12000 --dump-dom \"file:///C:/Users/yasir/data-pipeline-studio/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --allow-file-access-from-files --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_p3\" --virtual-time-budget=6000 --dump-dom \"file:///C:/Users/yasir/data-pipeline-studio/_repro.html\")",
+      "Bash(py --version)",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_e2e\" --window-size=1440,900 --virtual-time-budget=15000 --screenshot=\"C:/Users/yasir/data-pipeline-studio/_repro.png\" \"http://localhost:8731/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_e2e2\" --virtual-time-budget=15000 --dump-dom \"http://localhost:8731/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_e2e3\" --window-size=1440,900 --virtual-time-budget=15000 --screenshot=\"C:/Users/yasir/data-pipeline-studio/_repro.png\" \"http://localhost:8731/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_e2e4\" --virtual-time-budget=15000 --dump-dom \"http://localhost:8731/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_e2e5\" --window-size=1440,900 --virtual-time-budget=18000 --screenshot=\"C:/Users/yasir/data-pipeline-studio/_repro.png\" \"http://localhost:8731/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_e2e6\" --virtual-time-budget=18000 --dump-dom \"http://localhost:8731/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_dbg\" --virtual-time-budget=20000 --dump-dom \"http://localhost:8731/_repro.html\")",
+      "Bash(grep -vE \"^\\\\s*$\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_val\" --virtual-time-budget=6000 --dump-dom \"http://localhost:8731/_repro.html\")",
+      "Bash(ls \"C:/Users/yasir/.claude/projects/c--Users-yasir-data-pipeline-studio/memory/\" 2>/dev/null && echo \"---\" && cat \"C:/Users/yasir/.claude/projects/c--Users-yasir-data-pipeline-studio/memory/MEMORY.md\" 2>/dev/null || echo \"NO MEMORY DIR/FILE YET\")",
+      "Read(//c/Users/yasir/.claude/projects/c--Users-yasir-data-pipeline-studio/**)",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_val2\" --virtual-time-budget=6000 --dump-dom \"http://localhost:8731/_repro.html\")",
+      "Bash(\"/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe\" --headless=new --disable-gpu --no-sandbox --user-data-dir=\"C:/Users/yasir/data-pipeline-studio/_edge_v\" --virtual-time-budget=6000 --dump-dom \"http://localhost:8731/_repro.html\")"
+    ]
+  }
+}

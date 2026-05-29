@@ -8,18 +8,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 :root{
-  --bg:#0f1117;--bg2:#161b22;--bg3:#1c2128;--bg4:#21262d;
-  --border:#30363d;--border2:#484f58;
-  --text:#e6edf3;--text2:#8b949e;--text3:#6e7681;
-  --accent:#2d7dd2;--accent2:#1f6feb;
-  --green:#3fb950;--red:#f85149;--yellow:#d29922;
-  --wa-green:#00a884;--wa-dark:#111b21;--wa-panel:#202c33;
-  --wa-out:#005c4b;--wa-in:#202c33;
-  --wa-text:#e9edef;--wa-text2:#8696a0;--wa-border:#2a373e;
-  --radius:6px;
+  --bg:#070912;--bg2:#0f1320;--bg3:#171c2b;--bg4:#222842;
+  --border:#262d40;--border2:#3a4259;
+  --text:#eef2fb;--text2:#9aa6be;--text3:#646e88;
+  --accent:#6d8eff;--accent2:#5a78ff;
+  --green:#34d399;--red:#ff5d6c;--yellow:#ffc457;
+  --wa-green:#22d3a6;--wa-dark:#0b131c;--wa-panel:#141f2a;
+  --wa-out:#0f4a48;--wa-in:#18242f;
+  --wa-text:#eaf2f8;--wa-text2:#8aa0b1;--wa-border:#21303d;
+  --radius:10px;
+  /* ── modern design tokens ── */
+  --accent-soft:rgba(109,142,255,.13);
+  --accent-ring:0 0 0 3px rgba(109,142,255,.20);
+  --green-soft:rgba(34,211,166,.13);
+  --grad-accent:linear-gradient(135deg,#6d8eff 0%,#9168ff 100%);
+  --grad-green:linear-gradient(135deg,#22d3a6 0%,#13bcd0 100%);
+  --grad-surface:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));
+  --grad-app:radial-gradient(1200px 600px at 80% -10%,rgba(109,142,255,.10),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(34,211,166,.07),transparent 55%);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.45);
+  --shadow:0 8px 28px rgba(0,0,0,.45);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.6);
+  --glow-accent:0 8px 26px rgba(90,120,255,.35);
+  --glow-green:0 8px 26px rgba(34,211,166,.30);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;font-size:13px;}
+body{font-family:'Inter','Segoe UI Variable Text','Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;font-size:13px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;letter-spacing:.1px;}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:var(--grad-app);pointer-events:none;}
 
 /* AUTH */
 #auth-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;}
@@ -580,6 +594,157 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   border-radius:20px;white-space:nowrap;letter-spacing:.3px;
 }
 input[type=file]{display:none;}
+
+/* ═══════════════════════════════════════════════════════════════
+   ✦ MODERN OVERHAUL LAYER — refines existing components.
+   Same selectors, later in cascade → wins. No JS/markup changes.
+═══════════════════════════════════════════════════════════════ */
+
+/* — global polish — */
+*{scrollbar-width:thin;scrollbar-color:var(--border2) transparent;}
+::-webkit-scrollbar{width:9px;height:9px;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+::-webkit-scrollbar-thumb:hover{background:#4b5572;background-clip:padding-box;}
+::selection{background:rgba(109,142,255,.32);color:#fff;}
+button{font-family:inherit;}
+input,select,textarea{font-family:inherit;}
+input:focus-visible,select:focus-visible,textarea:focus-visible{box-shadow:var(--accent-ring);}
+
+/* ── AUTH / MODALS / LOCK — glass cards ── */
+#auth-modal,#zip-pw-modal{background:rgba(4,6,12,.62);backdrop-filter:blur(10px) saturate(120%);}
+.auth-box,.lo-box,.zpm-box{
+  background:linear-gradient(180deg,#141a28,#0e1320);
+  border:1px solid var(--border2);border-radius:20px;
+  box-shadow:var(--shadow-lg),inset 0 1px 0 rgba(255,255,255,.05);
+  padding:36px;position:relative;overflow:hidden;
+}
+.auth-box::before,.lo-box::before,.zpm-box::before{
+  content:'';position:absolute;top:-40%;left:-10%;width:120%;height:80%;
+  background:radial-gradient(closest-side,rgba(109,142,255,.16),transparent);pointer-events:none;
+}
+.auth-logo svg{filter:drop-shadow(0 0 8px rgba(109,142,255,.5));}
+.auth-title,.lo-title,.zpm-title{font-size:18px;font-weight:700;letter-spacing:-.2px;}
+.ai,.zpm-input,#lo-pass{
+  padding:11px 13px;border-radius:11px;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.ai:focus,.zpm-input:focus,#lo-pass:focus{border-color:var(--accent);box-shadow:var(--accent-ring);background:rgba(255,255,255,.05);}
+.ab,.zpm-btn.ok{
+  padding:12px;border-radius:11px;background:var(--grad-accent);
+  font-weight:600;font-size:13px;letter-spacing:.2px;
+  box-shadow:var(--glow-accent);transition:transform .12s,box-shadow .15s,filter .15s;
+}
+.ab:hover,.zpm-btn.ok:hover{background:var(--grad-accent);filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 12px 32px rgba(90,120,255,.5);}
+.ab:active,.zpm-btn.ok:active{transform:translateY(0);}
+.fl{text-transform:uppercase;font-size:10px;letter-spacing:.6px;}
+
+/* ── LANDING DISGUISE ── */
+.land-topbar,.topbar{background:linear-gradient(180deg,rgba(20,25,40,.92),rgba(12,16,28,.92));backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.land-logo svg,.topbar-logo svg{filter:drop-shadow(0 0 6px rgba(109,142,255,.45));}
+.lm-item.active{color:var(--text);border-bottom-color:var(--accent);}
+.lm-item.active::after{content:'';position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--grad-accent);border-radius:2px;}
+.ltb-btn{border-radius:9px;transition:all .15s;}
+.ltb-btn:hover{transform:translateY(-1px);}
+.ltb-btn.primary{background:var(--grad-accent);border:none;box-shadow:var(--glow-accent);font-weight:600;}
+.ltb-btn.primary:hover{filter:brightness(1.08);box-shadow:0 12px 30px rgba(90,120,255,.5);}
+.land-toolbar-right>div[style*="border-radius:50%"]{background:var(--grad-accent)!important;box-shadow:var(--glow-accent);}
+.land-sidebar{background:linear-gradient(180deg,#0e1320,#0b101b);}
+.ls-item{border-radius:0 9px 9px 0;margin-right:8px;transition:all .12s;}
+.ls-item:hover{background:var(--accent-soft);color:var(--text);}
+.ls-item.active{background:var(--accent-soft);color:var(--accent);border-left-width:3px;font-weight:600;}
+.ls-badge{border-radius:20px;background:var(--bg4);}
+.land-hero{
+  background:
+    radial-gradient(700px 300px at 90% -30%,rgba(109,142,255,.22),transparent),
+    linear-gradient(135deg,#11243f 0%,#0e1320 60%);
+  border:1px solid var(--border2);border-radius:18px;box-shadow:var(--shadow);
+}
+.hero-text h1{font-size:20px;letter-spacing:-.4px;}
+.hbadge{border-radius:20px;backdrop-filter:blur(4px);}
+.lcard{
+  background:var(--bg2);background-image:var(--grad-surface);
+  border:1px solid var(--border);border-radius:14px;
+  transition:transform .15s,border-color .15s,box-shadow .15s;
+}
+.lcard:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:var(--shadow);}
+.stat-big{letter-spacing:-1px;}
+.btn-sm,.mt-btn,.sv-tbtn,.mt-btn{border-radius:9px;transition:all .14s;}
+.btn-sm:hover,.sv-tbtn:hover{transform:translateY(-1px);}
+.btn-sm.accent{background:var(--grad-accent);border:none;box-shadow:var(--glow-accent);font-weight:600;}
+.btn-sm.accent:hover{filter:brightness(1.08);}
+.mb-bar{background:var(--grad-accent);border-radius:3px 3px 0 0;}
+.status-pill,.badge{border-radius:20px;font-weight:600;}
+.land-statusbar{background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(11,16,27,.9));}
+
+/* ── MAIN APP SHELL ── */
+.tt{border-radius:9px;transition:all .14s;}
+.tt.active{background:var(--accent-soft);border-color:transparent;color:var(--text);}
+.sd2{box-shadow:0 0 0 3px rgba(52,211,153,.18);}
+.sidebar{background:linear-gradient(180deg,#0e1320,#0b101b);}
+.ib{border-radius:11px;border-style:solid;border-color:var(--border);background:rgba(255,255,255,.02);transition:all .15s;}
+.ib:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);transform:translateY(-1px);}
+.ci{border-radius:11px;transition:all .12s;}
+.ci:hover{background:var(--bg3);}
+.ci.active{background:var(--accent-soft);border-color:transparent;position:relative;}
+.ci.active::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--grad-accent);}
+.cav,.ctbav,.cp-av{background:linear-gradient(135deg,#222842,#171c2b);border:1px solid var(--border2);color:#cdd7ff;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
+.lbtn{border-radius:10px;transition:all .14s;}
+
+/* ── CHAT CANVAS ── */
+.chats-wrap{background:radial-gradient(900px 600px at 75% 0%,#13243a 0%,#0c1626 55%,#0a121e 100%);}
+.multi-toolbar{background:linear-gradient(180deg,rgba(15,19,32,.92),rgba(11,16,27,.85));backdrop-filter:blur(10px);}
+.mt-btn.active{background:var(--green-soft);border-color:rgba(34,211,166,.4);}
+.pf{border-radius:38px;box-shadow:0 0 0 8px #0a0f16,0 0 0 10px #232a3a,0 30px 80px rgba(0,0,0,.7);}
+
+/* chat headers */
+.ctb,.cp-header{background:linear-gradient(180deg,rgba(24,34,46,.96),rgba(18,28,38,.96));backdrop-filter:blur(10px);border-bottom:1px solid var(--wa-border);box-shadow:0 1px 0 rgba(0,0,0,.3);}
+.ibt,.cp-ibt{border-radius:10px;transition:all .14s;}
+.ibt:hover,.cp-ibt:hover{background:rgba(255,255,255,.08);}
+
+/* message bubbles — modern */
+.mb{padding:7px 10px 5px;border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.35);}
+.mw.out .mb{background:linear-gradient(135deg,#15605b,#0e4946);border-radius:14px 14px 4px 14px;}
+.mw.in .mb{background:linear-gradient(135deg,#1d2a36,#16222d);border-radius:14px 14px 14px 4px;}
+.mw{margin-bottom:4px;}
+.mt{font-size:13.5px;line-height:1.5;}
+.msn{color:#5ce6c0;}
+.dd span,.sysmsg span{background:rgba(8,14,22,.85);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.05);border-radius:14px;}
+.bm-marker span,.mb-label{border-radius:20px;}
+
+/* compose / search inputs */
+.si,.cp-si,.dp-header input{border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--wa-border);transition:all .15s;}
+.si:focus,.cp-si:focus{border-color:var(--wa-green);box-shadow:0 0 0 3px rgba(34,211,166,.18);}
+.add-panel-btn{background:var(--green-soft);border-color:rgba(34,211,166,.4);border-radius:22px;font-weight:600;transition:all .15s;}
+.add-panel-btn:hover{background:rgba(34,211,166,.22);transform:translateY(-1px);box-shadow:var(--glow-green);}
+
+/* ── RIGHT PANEL / GALLERY ── */
+.rp{background:linear-gradient(180deg,#0f1320,#0b101b);box-shadow:var(--shadow-lg);}
+.rptb.active{color:var(--wa-green);border-bottom-color:var(--wa-green);}
+.mthumb{border-radius:10px;transition:transform .14s;}
+.mthumb:hover{transform:scale(1.03);}
+.sv-tbtn.green{border-radius:9px;}
+
+/* ── DATE PICKER / FLOATING UI — glass ── */
+.date-picker-panel{border-radius:16px;box-shadow:var(--shadow-lg);background:linear-gradient(180deg,#141a28,#0e1320);border:1px solid var(--border2);}
+.dp-month-btn.active,.dp-day-btn.active{background:var(--grad-accent);border-color:transparent;}
+.dp-vtab.active{color:var(--wa-green);border-bottom-color:var(--wa-green);}
+#loading{background:linear-gradient(180deg,#141a28,#0e1320);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:14px;box-shadow:var(--shadow-lg);backdrop-filter:blur(10px);}
+.spin{border-top-color:var(--accent);}
+#lightbox{background:rgba(2,4,8,.95);backdrop-filter:blur(8px);}
+#lightbox img,#lightbox video{box-shadow:var(--shadow-lg);border-radius:12px;}
+#chat-ctx-menu,.obs-dropdown{border-radius:12px!important;box-shadow:var(--shadow-lg)!important;background:linear-gradient(180deg,#141a28,#0e1320)!important;border-color:var(--border2)!important;}
+.ctx-item,.obs-item{transition:background .12s;}
+.al-badge{border-radius:20px;background:var(--green-soft);}
+.al-select{border-radius:9px;}
+
+/* ambient gradient visible on opaque full-screen layers */
+#landing{background:#070912;background-image:var(--grad-app);}
+.land-main{background:transparent;}
+#app{background:#070912;background-image:var(--grad-app);}
+.dtab,.main-area{background:transparent;}
+#lock-overlay{background:#070912;background-image:var(--grad-app);}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
 </head>
 <body>
@@ -1059,7 +1224,7 @@ input[type=file]{display:none;}
           </div>
 
           <!-- panels row -->
-          <div id="panels-row" style="flex:1;display:flex;overflow-x:auto;overflow-y:hidden;background:#16213e;position:relative;">
+          <div id="panels-row" style="flex:1;display:flex;overflow-x:auto;overflow-y:hidden;background:radial-gradient(900px 600px at 75% 0%,#13243a 0%,#0c1626 55%,#0a121e 100%);position:relative;">
             <!-- doodle bg -->
             <div style="position:absolute;inset:0;pointer-events:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cg fill=%22none%22 stroke=%22%23ffffff%22 stroke-opacity=%220.035%22 stroke-width=%221.3%22%3E%3Ccircle cx=%2230%22 cy=%2230%22 r=%2218%22/%3E%3Ccircle cx=%22195%22 cy=%2236%22 r=%2212%22/%3E%3Crect x=%22118%22 y=%2214%22 width=%2224%22 height=%2224%22 rx=%225%22 transform=%22rotate(16 130 26)%22/%3E%3Ccircle cx=%22150%22 cy=%22150%22 r=%2215%22/%3E%3Ccircle cx=%22270%22 cy=%22210%22 r=%2213%22/%3E%3Crect x=%2255%22 y=%22195%22 width=%2226%22 height=%2222%22 rx=%224%22 transform=%22rotate(12 67 207)%22/%3E%3C/g%3E%3C/svg%3E');background-size:300px 300px;z-index:0;"></div>
             <div id="panels-inner" style="display:flex;height:100%;position:relative;z-index:1;min-width:100%;"></div>
@@ -1258,6 +1423,8 @@ function landClock(){
 
 async function init(){
   await odb();
+  // Request persistent storage so large media imports aren't capped/evicted.
+  ensureStorage().catch(()=>{});
   const m=await dget('meta','auth');
   if(m){
     document.getElementById('v-setup').style.display='none';
@@ -2122,11 +2289,76 @@ function hideHtsCloud(){
 // ZIP IMPORT (with password support)
 // ══════════════════════════════════════════
 let _pendingZipFile=null;
+let _importing=false;   // true while a ZIP import is running — suspends auto-lock
+
+// Human-readable byte size
+function fmtBytes(n){
+  if(!n||n<0)return '0 B';
+  const u=['B','KB','MB','GB','TB'];
+  let i=Math.floor(Math.log(n)/Math.log(1024));
+  i=Math.max(0,Math.min(i,u.length-1));
+  return (n/Math.pow(1024,i)).toFixed(i?1:0)+' '+u[i];
+}
+
+// True when an error means the browser ran out of storage space/quota
+function isQuotaErr(e){
+  const name=(e&&e.name)||'';
+  const m=((e&&e.message)||String(e||'')).toLowerCase();
+  return name==='QuotaExceededError'
+    || /quota|exceeded|storage (is )?full|no space|not enough|out of (disk|space)|disk/i.test(m);
+}
+
+// Ask the browser to make storage persistent (Chromium then grants a much
+// larger, non-evictable quota) and return current usage/quota figures.
+async function ensureStorage(){
+  let persisted=false,quota=0,usage=0;
+  try{
+    if(navigator.storage){
+      if(navigator.storage.persisted) persisted=await navigator.storage.persisted();
+      if(!persisted && navigator.storage.persist) persisted=await navigator.storage.persist();
+      if(navigator.storage.estimate){const e=await navigator.storage.estimate();quota=e.quota||0;usage=e.usage||0;}
+    }
+  }catch{}
+  return {persisted,quota,usage,free:quota?Math.max(0,quota-usage):0};
+}
+
+// Post-import summary shown only when some media could not be saved.
+function reportMediaShortfall({saved,total,referenced,quotaStop,firstErr,free,needed}){
+  const notStored=Math.max(0,total-saved);                       // in ZIP but failed to save
+  const notInZip=referenced?Math.max(0,referenced-total):0;      // referenced but absent from ZIP
+  const lines=[];
+  if(quotaStop){
+    lines.push(`⚠ Storage limit reached during import.`);
+    lines.push(`Saved ${saved.toLocaleString()} of ${total.toLocaleString()} media files; ${notStored.toLocaleString()} could not be stored.`);
+    if(free) lines.push(`Free space in this browser profile was ~${fmtBytes(free)}${needed?` but the export needs ~${fmtBytes(needed)}`:''}.`);
+    lines.push('');
+    lines.push('To import the rest:');
+    lines.push('• Free up disk space, then re-import — the app now requests persistent (larger) storage.');
+    lines.push('• Or export a smaller date range from WhatsApp.');
+  } else if(notStored>0){
+    lines.push(`${notStored.toLocaleString()} of ${total.toLocaleString()} media files could not be read from the ZIP.`);
+    if(firstErr) lines.push(`First error: ${firstErr}`);
+  } else if(notInZip>0){
+    // A handful of referenced-but-absent files is normal (view-once, expired,
+    // deleted, or zero-byte media). Only flag a genuinely large shortfall —
+    // the kind WhatsApp's export size limit produces.
+    const significant = notInZip >= Math.max(100, Math.round(referenced*0.05));
+    if(!significant) return;
+    lines.push(`${notInZip.toLocaleString()} of ${referenced.toLocaleString()} media files referenced in this chat aren't in the ZIP.`);
+    lines.push(`They were likely excluded from the export (usually WhatsApp's size limit; view-once/expired media never export).`);
+    lines.push('');
+    lines.push('To include older photos/stickers, re-export a smaller date range in WhatsApp.');
+  }
+  if(lines.length) alert(lines.join('\n'));
+}
 
 async function importZip(input){
   const file=input.files[0];if(!file)return;input.value='';
+  if(!CK){ alert('Vault is locked. Re-enter your master password to unlock, then import again.'); return; }
   _pendingZipFile=file;
-  await tryImportZip(file,null);
+  _importing=true;
+  try{ await tryImportZip(file,null); }
+  finally{ _importing=false; }
 }
 
 // resolve/reject for the ZIP password modal promise
@@ -2361,7 +2593,21 @@ async function tryImportZip(file,password){
       !e.isDir&&!e.filename.toLowerCase().endsWith('.txt')&&!e.filename.includes('__MACOSX')&&e.compSize>0
     );
 
-    const cid='c'+Date.now();let mc=0;
+    // Pre-flight: make storage persistent and warn if the export won't fit.
+    const neededBytes=mediaEntries.reduce((n,e)=>n+(e.uncompSize||e.compSize||0),0);
+    const st=await ensureStorage();
+    if(st.quota && neededBytes>st.free){
+      hideL();
+      const ok=confirm(
+        `This export's media is ~${fmtBytes(neededBytes)}, but only ~${fmtBytes(st.free)} of storage is available in this browser profile.\n\n`+
+        `Media beyond the limit won't be saved (older photos/stickers will show as placeholders).\n\n`+
+        `Continue and import what fits? (Free up disk space first for the full chat.)`
+      );
+      if(!ok){_pendingZipFile=null;return;}
+      showL('Importing…');
+    }
+
+    const cid='c'+Date.now();let mc=0,failed=0,firstErr='',quotaStop=false;
     for(let i=0;i<mediaEntries.length;i++){
       const entry=mediaEntries[i];
       const fn=entry.filename.split('/').pop();
@@ -2373,14 +2619,22 @@ async function tryImportZip(file,password){
         await dput('media',cid+'__'+fn,{filename:fn,mime:gm(fn),data:await encBin(buf)});
         mc++;
       }catch(e){
-        console.warn('Skipping '+fn+':',e.message);
+        failed++;
+        const em=(e&&e.message)||String(e);
+        if(!firstErr) firstErr=em;
+        console.warn('Skipping '+fn+':',em);
+        if(isQuotaErr(e)){ quotaStop=true; break; } // further writes will also fail
       }
     }
+    if(quotaStop) failed=mediaEntries.length-mc;
 
     setL('Saving chat…');
-    await dput('chats',cid+'__meta',await enc(JSON.stringify({name:meta.name,msgCount:msgs.length,date:new Date().toLocaleDateString(),isGroup:meta.isGroup,myName:meta.myName,mediaCount:mc})));
+    const referenced=new Set(msgs.filter(m=>m.file).map(m=>(''+m.file).split('/').pop())).size;
+    await dput('chats',cid+'__meta',await enc(JSON.stringify({name:meta.name,msgCount:msgs.length,date:new Date().toLocaleDateString(),isGroup:meta.isGroup,myName:meta.myName,mediaCount:mc,mediaTotal:mediaEntries.length,mediaFailed:failed})));
     await dput('chats',cid+'__msgs',await enc(JSON.stringify(msgs)));
     hideL();_pendingZipFile=null;await loadList();openChat(cid);
+    if(failed>0||referenced>mediaEntries.length)
+      reportMediaShortfall({saved:mc,total:mediaEntries.length,referenced,quotaStop,firstErr,free:st.free,needed:neededBytes});
 
   }catch(e){hideL();console.error(e);alert('Failed to import: '+e.message);}
 }
@@ -2420,19 +2674,25 @@ async function tryImportZipJSZip(file,password){
       alert('Could not read chat file: '+(e.message||e));return;
     }
     const{msgs,meta}=parseWA(raw);
-    const cid='c'+Date.now();let mc=0;
+    await ensureStorage();
+    const cid='c'+Date.now();let mc=0,failed=0,firstErr='',quotaStop=false;
     const ents=[];
     zip.forEach((p,ze)=>{if(!ze.dir&&!p.toLowerCase().endsWith('.txt')&&!p.includes('__MACOSX')){const fn=p.split('/').pop();if(fn)ents.push({ze,fn});}});
-    for(let i=0;i<ents.length;i+=10){
+    outer:for(let i=0;i<ents.length;i+=10){
       setL(`Encrypting ${i}/${ents.length} files…`);
       await new Promise(r=>setTimeout(r,0));
       for(const{ze,fn}of ents.slice(i,i+10)){
-        try{const buf=await ze.async('arraybuffer');await dput('media',cid+'__'+fn,{filename:fn,mime:gm(fn),data:await encBin(buf)});mc++;}catch{}
+        try{const buf=await ze.async('arraybuffer');await dput('media',cid+'__'+fn,{filename:fn,mime:gm(fn),data:await encBin(buf)});mc++;}
+        catch(e){failed++;const em=(e&&e.message)||String(e);if(!firstErr)firstErr=em;console.warn('Skipping '+fn+':',em);if(isQuotaErr(e)){quotaStop=true;break outer;}}
       }
     }
-    await dput('chats',cid+'__meta',await enc(JSON.stringify({name:meta.name,msgCount:msgs.length,date:new Date().toLocaleDateString(),isGroup:meta.isGroup,myName:meta.myName,mediaCount:mc})));
+    if(quotaStop) failed=ents.length-mc;
+    const referenced=new Set(msgs.filter(m=>m.file).map(m=>(''+m.file).split('/').pop())).size;
+    await dput('chats',cid+'__meta',await enc(JSON.stringify({name:meta.name,msgCount:msgs.length,date:new Date().toLocaleDateString(),isGroup:meta.isGroup,myName:meta.myName,mediaCount:mc,mediaTotal:ents.length,mediaFailed:failed})));
     await dput('chats',cid+'__msgs',await enc(JSON.stringify(msgs)));
     hideL();_pendingZipFile=null;await loadList();openChat(cid);
+    if(failed>0||referenced>ents.length)
+      reportMediaShortfall({saved:mc,total:ents.length,referenced,quotaStop,firstErr,free:0,needed:0});
   }catch(e){hideL();console.error(e);alert('Failed to import: '+e.message);}
 }
 
@@ -3093,6 +3353,7 @@ function startAutoLock(){
   // Check every 10s
   activityTimer=setInterval(()=>{
     if(!CK) return; // already locked
+    if(_importing){ lastActivity=Date.now(); return; } // never auto-lock mid-import
     const idle=(Date.now()-lastActivity)/1000;
     const limitSec=autoLockTimeoutMins*60;
     const remaining=Math.max(0,limitSec-idle);
